@@ -1,7 +1,7 @@
 Type: Package
 Package: admiralpeds
 Title: Pediatrics Extension Package for ADaM in 'R' Asset Library
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("Fanny", "Gautier", , "fanny.gautier@cytel.com", role = c("aut", "cre")),
     person("Ross", "Farrugia", role = "aut"),
@@ -37,7 +37,7 @@ Depends: R (>= 4.1)
 Imports: admiral (>= 1.0.0), admiraldev (>= 1.0.0), cli (>= 3.6.2),
         dplyr (>= 1.0.5), magrittr (>= 1.5), purrr (>= 0.3.3), rlang
         (>= 0.4.4), tidyselect (>= 1.1.0), zoo (>= 1.8.12)
-Suggests: knitr, lubridate (>= 1.7.4), pharmaversesdtm (>= 0.2.0),
+Suggests: knitr, lubridate (>= 1.7.4), pharmaversesdtm (>= 1.1.0),
         rmarkdown, stringr (>= 1.4.0), testthat (>= 3.0.0), tibble
 VignetteBuilder: knitr
 Config/testthat/edition: 3
@@ -46,7 +46,7 @@ Language: en-US
 LazyData: true
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2024-08-16 13:03:15 UTC; fanny.gautier
+Packaged: 2025-01-16 17:02:23 UTC; fanny.gautier
 Author: Fanny Gautier [aut, cre],
   Ross Farrugia [aut],
   Zelos Zhu [aut],
@@ -65,4 +65,4 @@ Author: Fanny Gautier [aut, cre],
   Atorus Research [cph, fnd]
 Maintainer: Fanny Gautier <fanny.gautier@cytel.com>
 Repository: CRAN
-Date/Publication: 2024-08-21 12:50:02 UTC
+Date/Publication: 2025-01-16 17:50:02 UTC

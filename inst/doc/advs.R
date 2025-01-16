@@ -5,9 +5,11 @@ knitr::opts_chunk$set(
 )
 library(admiral)
 library(admiraldev)
+library(rlang)
 
 ## ----message=FALSE------------------------------------------------------------
 library(admiral)
+library(pharmaversesdtm, warn.conflicts = FALSE)
 library(admiralpeds)
 library(dplyr, warn.conflicts = FALSE)
 library(lubridate)
@@ -15,9 +17,9 @@ library(rlang)
 library(stringr)
 
 ## ----eval=TRUE----------------------------------------------------------------
-data(WHO_bmi_for_age_boys)
-data(WHO_bmi_for_age_girls)
-data(cdc_bmiage)
+who_bmi_for_age_boys <- admiralpeds::who_bmi_for_age_boys
+who_bmi_for_age_girls <- admiralpeds::who_bmi_for_age_girls
+cdc_bmiage <- admiralpeds::cdc_bmiage
 
 who_bmi_for_age <- who_bmi_for_age_boys %>%
   mutate(SEX = "M") %>%
@@ -71,8 +73,8 @@ dataset_vignette(
 )
 
 ## ----eval=TRUE----------------------------------------------------------------
-data(who_wt_for_lgth_boys)
-data(who_wt_for_lgth_girls)
+who_wt_for_lgth_boys <- admiralpeds::who_wt_for_lgth_boys
+who_wt_for_lgth_girls <- admiralpeds::who_wt_for_lgth_girls
 
 who_wt_for_lgth <- who_wt_for_lgth_boys %>%
   mutate(SEX = "M") %>%
@@ -88,8 +90,8 @@ dataset_vignette(
 )
 
 ## ----echo=FALSE, message=FALSE------------------------------------------------
-data("vs_peds")
-data("adsl_peds")
+vs_peds <- pharmaversesdtm::vs_peds
+adsl_peds <- admiralpeds::adsl_peds
 
 vs <- convert_blanks_to_na(vs_peds)
 adsl <- adsl_peds %>% select(-DOMAIN)
@@ -230,26 +232,26 @@ dataset_vignette(
 )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  advs <- advs %>%
-#    restrict_derivation(
-#      derivation = derive_params_growth_height,
-#      args = params(
-#        sex = SEX,
-#        height = HGTTMP,
-#        height_unit = HGTTMPU,
-#        meta_criteria = who_wt_for_lgth,
-#        parameter = VSTESTCD == "WEIGHT",
-#        analysis_var = AVAL,
-#        who_correction = TRUE,
-#        set_values_to_sds = exprs(
-#          PARAMCD = "WGTHSDS",
-#          PARAM = "Weight-for-length/height Z-Score"
-#        ),
-#        set_values_to_pctl = exprs(
-#          PARAMCD = "WGTHPCTL",
-#          PARAM = "Weight-for-length/height Percentile"
-#        )
-#      ),
-#      filter = AAGECUR < 730.5
-#    )
+# advs <- advs %>%
+#   restrict_derivation(
+#     derivation = derive_params_growth_height,
+#     args = params(
+#       sex = SEX,
+#       height = HGTTMP,
+#       height_unit = HGTTMPU,
+#       meta_criteria = who_wt_for_lgth,
+#       parameter = VSTESTCD == "WEIGHT",
+#       analysis_var = AVAL,
+#       who_correction = TRUE,
+#       set_values_to_sds = exprs(
+#         PARAMCD = "WGTHSDS",
+#         PARAM = "Weight-for-length/height Z-Score"
+#       ),
+#       set_values_to_pctl = exprs(
+#         PARAMCD = "WGTHPCTL",
+#         PARAM = "Weight-for-length/height Percentile"
+#       )
+#     ),
+#     filter = AAGECUR < 730.5
+#   )
 

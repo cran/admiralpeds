@@ -378,11 +378,12 @@ Anthropometric indicators</a></li>
 <p>Once the required packages have been loaded, the first step is
 preparing the metadata.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(admiral)</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(admiralpeds)</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(pharmaversesdtm, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(admiralpeds)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">library</span>(dplyr, <span class="at">warn.conflicts =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="fu">library</span>(rlang)</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="fu">library</span>(stringr)</span></code></pre></div>
 <p>Here, we have made some default decisions regarding which metadata to
 use in the package. But you are free to replace these with any other
 source you prefer (as long as you keep the structure of the dataframe
@@ -427,9 +428,9 @@ remove the rounding and the call to the
 <code>derive_interp_records()</code> function.</p>
 <p>We do this pre-processing of the metadata using the following code
 for BMI as an example:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">data</span>(WHO_bmi_for_age_boys)</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">data</span>(WHO_bmi_for_age_girls)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="fu">data</span>(cdc_bmiage)</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>who_bmi_for_age_boys <span class="ot">&lt;-</span> admiralpeds<span class="sc">::</span>who_bmi_for_age_boys</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>who_bmi_for_age_girls <span class="ot">&lt;-</span> admiralpeds<span class="sc">::</span>who_bmi_for_age_girls</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>cdc_bmiage <span class="ot">&lt;-</span> admiralpeds<span class="sc">::</span>cdc_bmiage</span>
 <span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
 <span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>who_bmi_for_age <span class="ot">&lt;-</span> who_bmi_for_age_boys <span class="sc">%&gt;%</span></span>
 <span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="st">&quot;M&quot;</span>) <span class="sc">%&gt;%</span></span>
@@ -699,8 +700,8 @@ metadata values variable a generic name, <code>HEIGHT_LENGTH</code>, so
 that any user could equally choose to pass weight-for-height files if
 preferred.</p>
 <p>We do this using the following code:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">data</span>(who_wt_for_lgth_boys)</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">data</span>(who_wt_for_lgth_girls)</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>who_wt_for_lgth_boys <span class="ot">&lt;-</span> admiralpeds<span class="sc">::</span>who_wt_for_lgth_boys</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>who_wt_for_lgth_girls <span class="ot">&lt;-</span> admiralpeds<span class="sc">::</span>who_wt_for_lgth_girls</span>
 <span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>who_wt_for_lgth <span class="ot">&lt;-</span> who_wt_for_lgth_boys <span class="sc">%&gt;%</span></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SEX =</span> <span class="st">&quot;M&quot;</span>) <span class="sc">%&gt;%</span></span>

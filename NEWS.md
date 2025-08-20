@@ -1,3 +1,21 @@
+# admiralpeds 0.2.1
+
+## Documentation
+
+- Removed display of data types from the `WHO` metadata (#104)
+
+## Various
+
+<details>
+
+<summary>Developer Notes</summary>
+
+* Updated the company name as `Cytel Inc.` in `LICENSE.md` (#109)
+* Added copyright holder logos (#106)
+* Updated the default math-rendering to `mathjax` (#104)
+
+</details>
+
 # admiralpeds 0.2.0
 
 ## Updates of Template program

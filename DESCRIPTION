@@ -1,9 +1,10 @@
 Type: Package
 Package: admiralpeds
 Title: Pediatrics Extension Package for ADaM in 'R' Asset Library
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
-    person("Fanny", "Gautier", , "fanny.gautier@cytel.com", role = c("aut", "cre")),
+    person("Fanny", "Gautier", , "fanny.gautier@cytel.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0004-3581-0131")),
     person("Ross", "Farrugia", role = "aut"),
     person("Zelos", "Zhu", role = "aut"),
     person("Sukalpo", "Saha", role = "aut"),
@@ -15,8 +16,8 @@ Authors@R: c(
     person("Amin", "Sherzad", role = "ctb"),
     person("David", "Freedman", role = "ctb"),
     person("Mahmoud", "Hamza", role = "ctb"),
+    person("Cytel Inc.", role = c("cph", "fnd")),
     person("F. Hoffmann-La Roche AG", role = c("cph", "fnd")),
-    person("Cytel", role = c("cph", "fnd")),
     person("Pfizer Inc.", role = c("cph", "fnd")),
     person("Atorus Research", role = c("cph", "fnd"))
   )
@@ -46,8 +47,9 @@ Language: en-US
 LazyData: true
 RoxygenNote: 7.3.2
 NeedsCompilation: no
-Packaged: 2025-01-16 17:02:23 UTC; fanny.gautier
-Author: Fanny Gautier [aut, cre],
+Packaged: 2025-08-20 14:00:49 UTC; fanny.gautier
+Author: Fanny Gautier [aut, cre] (ORCID:
+    <https://orcid.org/0009-0004-3581-0131>),
   Ross Farrugia [aut],
   Zelos Zhu [aut],
   Sukalpo Saha [aut],
@@ -59,10 +61,10 @@ Author: Fanny Gautier [aut, cre],
   Amin Sherzad [ctb],
   David Freedman [ctb],
   Mahmoud Hamza [ctb],
+  Cytel Inc. [cph, fnd],
   F. Hoffmann-La Roche AG [cph, fnd],
-  Cytel [cph, fnd],
   Pfizer Inc. [cph, fnd],
   Atorus Research [cph, fnd]
 Maintainer: Fanny Gautier <fanny.gautier@cytel.com>
 Repository: CRAN
-Date/Publication: 2025-01-16 17:50:02 UTC
+Date/Publication: 2025-08-20 14:30:02 UTC

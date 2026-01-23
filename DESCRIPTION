@@ -1,7 +1,7 @@
 Type: Package
 Package: admiralpeds
 Title: Pediatrics Extension Package for ADaM in 'R' Asset Library
-Version: 0.2.1
+Version: 0.3.0
 Authors@R: c(
     person("Fanny", "Gautier", , "fanny.gautier@cytel.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0004-3581-0131")),
@@ -35,7 +35,7 @@ License: Apache License (>= 2)
 URL: https://pharmaverse.github.io/admiralpeds/,
         https://github.com/pharmaverse/admiralpeds
 Depends: R (>= 4.1)
-Imports: admiral (>= 1.0.0), admiraldev (>= 1.0.0), cli (>= 3.6.2),
+Imports: admiral (>= 1.0.0), admiraldev (>= 1.3.1), cli (>= 3.6.2),
         dplyr (>= 1.0.5), magrittr (>= 1.5), purrr (>= 0.3.3), rlang
         (>= 0.4.4), tidyselect (>= 1.1.0), zoo (>= 1.8.12)
 Suggests: knitr, lubridate (>= 1.7.4), pharmaversesdtm (>= 1.1.0),
@@ -45,9 +45,9 @@ Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 NeedsCompilation: no
-Packaged: 2025-08-20 14:00:49 UTC; fanny.gautier
+Packaged: 2026-01-23 12:43:16 UTC; fanny.gautier
 Author: Fanny Gautier [aut, cre] (ORCID:
     <https://orcid.org/0009-0004-3581-0131>),
   Ross Farrugia [aut],
@@ -67,4 +67,4 @@ Author: Fanny Gautier [aut, cre] (ORCID:
   Atorus Research [cph, fnd]
 Maintainer: Fanny Gautier <fanny.gautier@cytel.com>
 Repository: CRAN
-Date/Publication: 2025-08-20 14:30:02 UTC
+Date/Publication: 2026-01-23 13:00:07 UTC

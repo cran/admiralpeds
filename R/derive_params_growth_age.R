@@ -8,26 +8,30 @@
 #'   The variables specified in `sex`, `age`, `age_unit`, `parameter`, `analysis_var`
 #'   are expected to be in the dataset.
 #'
+#' @permitted [dataset]
+#'
 #' @param sex Sex
 #'
-#'   A character vector is expected.
+#' @permitted [char_scalar].
 #'
-#'   Expected Values: `M`, `F`
+#'   Expected Values: `M`, `F`.
 #'
 #' @param age Current Age
 #'
-#'   A numeric vector is expected. Note that this is the actual age at the current visit.
+#' @permitted [num_scalar].
+#'
+#'   Note that this is the actual age at the current visit.
 #'
 #' @param age_unit Age Unit
 #
-#'   A character vector is expected.
+#' @permitted [char_scalar].
 #'
-#'   Expected values: `days`, `weeks`, `months`
+#'   Expected values: `days`, `weeks`, `months`.
 #'
 #' @param meta_criteria Metadata dataset
 #'
 #'   A metadata dataset with the following expected variables:
-#'   `AGE`, `AGEU`, `SEX`, `L`, `M`, `S`
+#'   `AGE`, `AGEU`, `SEX`, `L`, `M`, `S`.
 #'
 #'   The dataset can be derived from CDC/WHO or user-defined datasets.
 #'   The CDC/WHO growth chart metadata datasets are available in the package and will
@@ -46,6 +50,8 @@
 #'   * `M` - Median
 #'   * `S` - Coefficient of variation
 #'
+#' @permitted [dataset]
+#'
 #' @param parameter Anthropometric measurement parameter to calculate z-score or percentile
 #'
 #'   A condition is expected with the input dataset `VSTESTCD`/`PARAMCD`
@@ -56,23 +62,27 @@
 #'   There is CDC/WHO metadata available for Height, Weight, BMI, and Head Circumference available
 #'   in the `admiralpeds` package.
 #'
+#' @permitted [condition]
+#'
 #' @param analysis_var Variable containing anthropometric measurement
 #'
-#' A numeric vector is expected, e.g. `AVAL`, `VSSTRESN`
+#' @permitted [num_scalar] e.g. `AVAL`, `VSSTRESN`.
 #'
 #' @param bmi_cdc_correction Extended CDC BMI-for-age correction
 #'
-#'  A logical scalar, e.g. `TRUE`/`FALSE` is expected.
 #'  CDC developed extended percentiles (>95%) to monitor high BMI values,
 #'  if set to `TRUE` the CDC's correction is applied.
 #'
+#' @permitted [logic_scalar]
+#'
 #' @param who_correction WHO adjustment for weight-based indicators
 #'
-#'  A logical scalar, e.g. `TRUE`/`FALSE` is expected.
 #'  WHO constructed a restricted application of the LMS method for weight-based indicators.
 #'  More details on these exact rules applied can be found at the document page 302 of the
 #'  [WHO Child Growth Standards Guidelines](https://www.who.int/publications/i/item/924154693X).
 #'  If set to `TRUE` the WHO correction is applied.
+#'
+#' @permitted [logic_scalar]
 #'
 #' @param set_values_to_sds Variables to be set for Z-Scores
 #'
@@ -87,9 +97,9 @@
 #'
 #'  where "obs" is the observed value for the respective anthropometric measure being calculated.
 #'
-#' *Permitted Values*: List of variable-value pairs
+#' @permitted [var_list_value_pairs].
 #'
-#'  If left as default value, `NULL`, then parameter not derived in output dataset
+#'  If left as default value, `NULL`, then parameter not derived in output dataset.
 #'
 #' @param set_values_to_pctl Variables to be set for Percentile
 #'
@@ -98,9 +108,9 @@
 #'   `set_values_to_pctl(exprs(PARAMCD = "BMIAPCTL", PARAM = "BMI-for-age percentile"))`
 #'  defines the parameter code and parameter.
 #'
-#' *Permitted Values*: List of variable-value pair
+#' @permitted [var_list_value_pairs].
 #'
-#'  If left as default value, `NULL`, then parameter not derived in output dataset
+#'  If left as default value, `NULL`, then parameter not derived in output dataset.
 #'
 #' @return The input dataset additional records with the new parameter added.
 #'
@@ -110,6 +120,8 @@
 #' @keywords der_prm_bds_vs
 #'
 #' @export
+#'
+#' @importFrom dplyr if_else
 #'
 #' @examples
 #' library(dplyr, warn.conflicts = FALSE)
@@ -142,15 +154,15 @@
 #'     trunc_out = FALSE
 #'   ) %>%
 #'   mutate(
-#'     AGECUR = ifelse(AGECUR_D >= 365.25 * 2, AGECUR_M, AGECUR_D),
-#'     AGECURU = ifelse(AGECUR_D >= 365.25 * 2, CURU_M, CURU_D)
+#'     AGECUR = if_else(AGECUR_D >= 365.25 * 2, AGECUR_M, AGECUR_D),
+#'     AGECURU = if_else(AGECUR_D >= 365.25 * 2, CURU_M, CURU_D)
 #'   )
 #'
 #' # metadata is in months
 #' cdc_meta_criteria <- admiralpeds::cdc_htage %>%
 #'   mutate(
 #'     age_unit = "months",
-#'     SEX = ifelse(SEX == 1, "M", "F")
+#'     SEX = if_else(SEX == 1, "M", "F")
 #'   )
 #'
 #' # metadata is in days
@@ -293,14 +305,14 @@ derive_params_growth_age <- function(dataset,
     if (bmi_cdc_correction) {
       add_sds <- add_sds %>%
         mutate(
-          AVAL := ifelse( # nolint
+          AVAL := if_else( # nolint
             temp_val >= P95 & !is.na(P95),
             qnorm((90 + 10 * pnorm((temp_val - P95) / Sigma)) / 100),
             AVAL
           ),
           # Cover the most extreme high BMI values for percentiles of 99.9 recurring
           # in case of Infinity being returned
-          AVAL = ifelse(AVAL == Inf, 8.21, AVAL)
+          AVAL = if_else(AVAL == Inf, 8.21, AVAL)
         ) %>%
         select(-c(P95, Sigma))
     }
@@ -334,7 +346,7 @@ derive_params_growth_age <- function(dataset,
     if (bmi_cdc_correction) {
       add_pctl <- add_pctl %>%
         mutate(
-          AVAL := ifelse( # nolint
+          AVAL := if_else( # nolint
             temp_val >= P95 & !is.na(P95),
             90 + 10 * pnorm((temp_val - P95) / Sigma),
             AVAL
@@ -350,5 +362,5 @@ derive_params_growth_age <- function(dataset,
   dataset_final <- dataset_final %>%
     select(-c(SD2pos, SD3pos, SD2neg, SD3neg, age_bins))
 
-  return(dataset_final)
+  dataset_final
 }

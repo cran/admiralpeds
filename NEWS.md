@@ -1,3 +1,29 @@
+# admiralpeds 0.4.0
+
+## Documentation
+
+- Updated the documentation and test cases for age unit handling in input data and metadata. (#133)
+
+- Added a new vignette "Explore ADaM Templates" to the "Get Started" menu. It displays the `{admiralpeds}` templates. (#132)
+
+## Various
+
+<details>
+
+<summary>Developer Notes</summary>
+
+* Added the `Downloads` Badge and corrected the `Test Coverage` Badge. (#129)
+
+* Added Dark Mode and icon tooltips to the website, and implemented a new PR website workflow, accessible by adding the "[create website]" keyword to PR titles. (#131)
+
+* Clickable links to GitHub profiles were added in the home page sidebar for every `{admiralpeds}` author. (#140)
+
+* Removed links to templates. (#141)
+
+* Up-versioned `{admiraldev}` to 1.5.0, as the custom `{admiral}` roclets (i.e., `roxygen_*()` functions) have now been moved to `{admiraldev}`. (#142)
+
+</details>
+
 # admiralpeds 0.3.0
 
 ## Documentation
@@ -37,7 +63,9 @@ and provided by [kapa.ai](https://docs.kapa.ai/kapa-for-open-source). (#120)
 <summary>Developer Notes</summary>
 
 * Updated the company name as `Cytel Inc.` in `LICENSE.md`. (#109)
+
 * Added copyright holder logos. (#106)
+
 * Updated the default math-rendering to `mathjax`. (#104)
 
 </details>
@@ -51,6 +79,7 @@ and provided by [kapa.ai](https://docs.kapa.ai/kapa-for-open-source). (#120)
 ## Documentation
 
 - Added CRAN installation instructions to README. (#10)
+
 - Subject based test data (e.g. DM, VS) has been migrated out of `{admiralpeds}` to `{pharmaversesdtm}`. (#40)
 
 # admiralpeds 0.1.0

@@ -73,6 +73,51 @@ dataset_vignette(
 )
 
 ## ----eval=TRUE----------------------------------------------------------------
+who_lgth_ht_for_age_boys <- admiralpeds::who_lgth_ht_for_age_boys
+who_lgth_ht_for_age_girls <- admiralpeds::who_lgth_ht_for_age_girls
+cdc_htage <- admiralpeds::cdc_htage
+
+height_for_age <- who_lgth_ht_for_age_boys %>%
+  mutate(SEX = "M") %>%
+  bind_rows(who_lgth_ht_for_age_girls %>%
+    mutate(SEX = "F")) %>%
+  # Keep patients < 2 yrs old
+  filter(Day < 730.5) %>%
+  rename(AGE = Day) %>%
+  # AGEU is added in metadata, required for derive_params_growth_age()
+  mutate(AGEU = "DAYS") %>%
+  bind_rows(cdc_htage %>%
+    mutate(
+      SEX = case_when(
+        SEX == 1 ~ "M",
+        SEX == 2 ~ "F",
+        TRUE ~ NA_character_
+      ),
+      # Ensure first that Age unit is "DAYS"
+      AGE = round(AGE * 30.4375),
+      AGEU = "DAYS"
+    ) %>%
+    # Interpolate the AGE by SEX so that we get CDC metadata by day instead of
+    # month in the same way as WHO metadata
+    derive_interp_records(
+      by_vars = exprs(SEX),
+      parameter = "HEIGHT"
+    ) %>%
+    # Keep patients >= 2 yrs till 20 yrs - Remove duplicates for 730 Days old which
+    # must come from WHO metadata only
+    filter(AGE >= 730.5 & AGE <= 7305)) %>%
+  arrange(AGE, SEX)
+
+## ----eval=TRUE, echo=FALSE----------------------------------------------------
+height_for_age <- who_bmi_for_age %>%
+  select(AGE, AGEU, SEX, L, M, S)
+
+dataset_vignette(
+  height_for_age,
+  filter = AGE < 20
+)
+
+## ----eval=TRUE----------------------------------------------------------------
 who_wt_for_lgth_boys <- admiralpeds::who_wt_for_lgth_boys
 who_wt_for_lgth_girls <- admiralpeds::who_wt_for_lgth_girls
 
@@ -170,11 +215,44 @@ advs <- advs %>%
     end_date = ADT
   )
 
+## ----eval=TRUE----------------------------------------------------------------
+# Example: Convert all ages to days to match metadata
+advs <- advs %>%
+  mutate(
+    AAGECUR_DAYS = case_when(
+      toupper(AAGECURU) == "YEARS" ~ AAGECUR * 365.25,
+      toupper(AAGECURU) == "MONTHS" ~ AAGECUR * 30.4375,
+      toupper(AAGECURU) == "WEEKS" ~ AAGECUR * 7,
+      toupper(AAGECURU) == "DAYS" ~ AAGECUR,
+      TRUE ~ NA_real_
+    ),
+    AAGECURU_STD = "DAYS"
+  )
+
 ## ----eval=TRUE, echo=FALSE----------------------------------------------------
 dataset_vignette(
   advs,
-  display_vars = exprs(USUBJID, BRTHDT, ADT, AAGECUR, AAGECURU)
+  display_vars = exprs(USUBJID, BRTHDT, ADT, AAGECUR, AAGECURU, AAGECUR_DAYS, AAGECURU_STD)
 )
+
+## ----eval=TRUE----------------------------------------------------------------
+advs <- advs %>%
+  derive_params_growth_age(
+    sex = SEX,
+    age = AAGECUR_DAYS, # Use standardized age
+    age_unit = AAGECURU_STD, # Use standardized unit
+    meta_criteria = height_for_age, # Ensure metadata is also in "days"
+    parameter = VSTESTCD == "HEIGHT",
+    analysis_var = VSSTRESN,
+    set_values_to_sds = exprs(
+      PARAMCD = "HGTSDS",
+      PARAM = "Height-for-age z-score"
+    ),
+    set_values_to_pctl = exprs(
+      PARAMCD = "HGTPCTL",
+      PARAM = "Height-for-age percentile"
+    )
+  )
 
 ## ----eval=TRUE----------------------------------------------------------------
 # Derive Current HEIGHT/LENGTH at each time point Temporary variable
